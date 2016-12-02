@@ -1,0 +1,40 @@
+findPairs(busters, ghosts, n)
+  pairs <- new array of index pairs                               // c1
+  if (n == 1)                                                     // c2
+    push back to pairs <- (0,0)                                   // c3
+  else                                                            // 
+    line               <- findLine(busters, ghosts, n)            // nlgn
+    push back to pairs <- line                                    // c2
+    if (n == 2)                                                   // c1
+      push back to pairs <- line + 1 mod 2                        // c4
+    else                                                          // 
+      busters              <- busters - line.fst                  // n
+      ghosts               <- ghosts - line.snd                   // n
+      bustersClockwise     <- busters clockwise from line         // 
+      ghostsClockwise      <- ghosts clockwise from line          // 
+      bustersCounter       <- busters - bustersClockwise          // 
+      ghostsCounter        <- ghosts - ghostsClockwise            // 
+      concatenate to pairs <- findPairs
+                     (bustersClockwise, ghostsClockwise, n - ?)   // T
+      concatenate to pairs <- findPairs
+                     (bustersCounter, ghostsCounter, n - ?)       // T
+                                                                  // 
+  return pairs                                                    // c5
+  
+// T(1) = c1 + c2 + c3 + c5
+//      = 1
+// T(2) = c1 + c2 + nlgn + c2 + c1 + c4 + c5
+//      = 2c1 + 2c2 + nlgn + c4 + c5
+//      = nlgn
+// T(3) = c1 + c2 + nlgn + c2 + c1 + n + n + T(2) + c5
+//      = 2c1 + 2c2 + nlgn + 2n + nlgn + c5
+//      = 2c1 + 2c2 + 2nlgn + 2n + c5
+//      = 2nlgn
+// T(4) = c1 + c2 + nlgn + c2 + c1 + n + n + T(3) + c5
+//      = 2c1 + 2c2 + nlgn + 2n + 2nlgn + c5
+//      = 2c1 + 2c2 + 3nlgn + 2n + c5
+//      = 3nlgn
+// ...
+// T(n) = (n-1)nlgn
+//      = (n^2 - n)lgn
+//      = O(n^2lgn)

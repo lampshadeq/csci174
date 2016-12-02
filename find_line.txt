@@ -1,0 +1,26 @@
+----- single-version
+if n = 1, then done                                               // c
+find the convex hull                                              // nlgn
+if one of the edges is a buster-ghost pair then done              // e (n to 2n)
+for each pair made from a fixed vertex and an inside point        // n
+  nums = getNums(vertex, point)                                   // 2n-2
+  if (nums[0] == nums[1] or nums[2] == nums[3]) then done         // c
+
+// c + nlgn + 2n + (n)(2n-2+c)
+// c + nlgn + 2n + 2n^2 - 2n + cn
+// c + nlgn + 2n^2 + cn
+// O(n^2)
+
+
+
+
+----- threaded-version
+if n = 1, then done                                               // c
+find the convex hull                                              // nlgn
+if one of the edges is a buster-ghost pair then done              // e (n to 2n)
+for each pair made from a fixed vertex and an inside point        // n
+  launch thread to check the nums                                 // c | 2n-2+c
+
+// c + nlgn + 2n + nc + 2n - 2 + c
+// 2c + nlgn + nc - 2
+// O(nlgn)

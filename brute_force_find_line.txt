@@ -1,0 +1,60 @@
+--------------------------------------------------------------------------------
+
+bfFindLine(busters, ghosts, n)
+  for (bidx <- [0,n))                                 // n + 1
+    for (gidx <- [0,n))                               // n + 1
+      nums <- getNums(busters, ghosts, bidx, gidx)    // n
+      
+      if (nums[0] == nums[1] or nums[2] == nums[3])   // c1
+        return (bidx, gidx)                           // c2
+        
+  return (-1, -1)                                     // c2
+
+// (n+1)(n+1)(n + c1)
+// (n^2 + 2n + 2)(n + c1)
+// n^3 + nc1 + 2n^2 + 2nc1 + 2n + 2c1
+// n^3 + 2n^2 + 3nc1 + 2n + 2c1
+// O(n^3)
+
+--------------------------------------------------------------------------------
+
+getNums(busters, ghosts, bidx, gidx)
+  nums <- array of size 4, initiate to 0 values                       // c1
+  
+  for (b <- [0,n))                                                    // n
+    if (b != bidx)                                                    // c2
+      // (bidx,gidx) clockwise from (bidx,b)
+      if (cross-product(busters[bidx], ghosts[gidx], busters[b]) > 0) // c3
+        increment nums[0] by 1                                        // c4
+      
+      // (bidx,gidx) counter-clockwise from (bidx,b)
+      else
+        increment nums[2] by 1                                        // c4
+        
+  for (g <- [0,n))                                                    // n
+    if (g != gidx)                                                    // c2
+      // (bidx,gidx) clockwise from (bidx,g)
+      if (cross-product(busters[bidx], ghosts[gidx], ghosts[g]) > 0)  // c3
+        increment nums[1] by 1                                        // c4
+      
+      // (bidx,gidx) counter-clockwise from (bidx,g)
+      else
+        increment nums[3] by 1                                        // c4
+        
+  return nums                                                         // c5
+
+// c1 + 2((n)(c2 + c3 + c4) + c2) + c5
+// c1 + 2(nc2 + nc3 + nc4 + c2) + c5
+// c1 + 2((n+1)c2 + nc3 + nc4) + c5
+// c1 + (2n+2)c2 + 2nc3 + 2nc4 + c5
+// O(n)
+
+--------------------------------------------------------------------------------
+
+cross-product(p0, p1, p2)
+  return (p1.x - p0.x) * (p2.y - p0.y) - (p2.x - p0.x) * (p1.y - p0.y)  // c
+  
+// c
+// O(1)
+
+--------------------------------------------------------------------------------

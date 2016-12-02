@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#read FILENAME
+FILENAME="graph"
+
+g++ -std=c++11 -o $FILENAME $FILENAME.cpp -lglut -lGLU -lGL -lm
+./$FILENAME
+
+# if SOIL is required
+# #include <SOIL/SOIL.h>
+# also glGenTextures(...) needs to be in init(), not global
+# g++ -std=c++11 -o $FILENAME $FILENAME.cpp -lglut -lSOIL -lGLU -lGL -lm
+# ./$FILENAME 0
+

@@ -6,7 +6,7 @@
   #include <GL/glut.h>
 #endif
 
-#include "ghostbusters_and_ghosts.cpp"
+#include "gag_graph.cpp"
 #include <string>
 
 // Type definitions
